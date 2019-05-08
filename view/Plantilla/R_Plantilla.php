@@ -29,13 +29,9 @@ $Plantilla = new PlantillaModel();
                 </nav>
             </div>
 
-
             <div class="container">
                 <div class="stepwizard">
-                    <div class="stepwizard-row setup-panel">
-                        
-
-                    </div>
+                    
                 </div>
                 <form role="form" method="POST">
                     <div class="row setup-content" id="step-1" style="width: 100%;">
@@ -67,8 +63,32 @@ $Plantilla = new PlantillaModel();
                         $Plantilla->__SET('Nombre_plantilla',$_POST['Nombre']);
                         $Plantilla->__SET('Fecha_Registro',$_POST["Fecha"]);
                         $Plantilla->__SET('Id_Tipo_Plantilla','1');
+                        
                          if ($control->Insertar($Plantilla)){
-                        echo "Registro Exitoso";
+                        echo '<script type="text/javascript">
+                        swal({
+            title: "REGISTRO",
+            text: "Realizado con exito!",
+            type: "success",
+            confirmButtonColor: "#DB00DB",
+            confirmButtonText: "OK!"
+          },
+          function(){
+            window.location.href="C_Plantilla.php";
+          });
+                      </script>';
+                    }
+                    else {
+                     echo '<script type="text/javascript">
+              swal({
+  title: "ERROR",
+  text: "Por favor llenar los Campos!",
+  type: "warning",
+  confirmButtonColor: "#ce3a1e",
+  confirmButtonText: "ok!",
+  closeOnConfirm: false
+});
+            </script>';
                     }
                 }
                     ?>

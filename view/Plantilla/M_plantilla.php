@@ -52,7 +52,18 @@ $resultado=$control->Buscar($_GET["Codigo_Plantilla"]);
                         $Plantilla->__SET('Nombre_plantilla',$_POST['Nombre']);
 
                          if ($control->Modificar($Plantilla)){
-                             echo 'Datos Actualizados Correctamente';
+                             echo '<script type="text/javascript">
+                             swal({
+                 title: "ACTUALIZADO",
+                 text: "Realizado con exito!",
+                 type: "success",
+                 confirmButtonColor: "#DB00DB",
+                 confirmButtonText: "OK!"
+               },
+               function(){
+                 window.location.href="C_Plantilla.php";
+               });
+                           </script>';
                            // $resultado=$control->Modificar($Plantilla);
                       ?>
                       <META HTTP-EQUIV="REFRESH" CONTENT="1;URL=C_Plantilla.php">

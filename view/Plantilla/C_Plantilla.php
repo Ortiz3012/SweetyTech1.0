@@ -1,6 +1,7 @@
 <?php
 include_once "../../controller/plantilla_controller.php";
 $control= new PlantillaController();
+//$control2= new DetalleController();
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +23,7 @@ $control= new PlantillaController();
 			</div>
 
 			<div class="container">
-				<div class="stepwizard" style="width=300px"> 
+				<div class="stepwizard"> 
 				<div id="main-container">
 						<table class="table">
 							<thead class="thead-dark">
@@ -31,8 +32,6 @@ $control= new PlantillaController();
 									<th>Nombre </th>
 									<th>Fecha</th>
 									<th>Tipo Plantilla</th>
-									<th>Insumos</th>
-									<th>Categoria</th>
 									<th>Configuracion</th>
 								</tr>
 							</thead>
@@ -43,11 +42,11 @@ $control= new PlantillaController();
 								<td><?php echo $dato->__GET('Nombre_plantilla'); ?> </td>
 								<td><?php echo $dato->__GET('Fecha_Registro'); ?> </td>
 								<td><?php echo $dato->__GET('Id_Tipo_Plantilla'); ?> </td>
-								<td><?php echo $dato->__GET('Codigo_Insumo'); ?> </td>
-								<td><?php echo $dato->__GET('id_Categoria'); ?> </td>
+									
 								<td>
-								<a href="../Insumo/R_Insumo.php" class="btn btn-primary text-light">Agregar &#128393;</a>
+								   <a href="Lista_Insumo.php?id=<?php echo $dato->Codigo_Plantilla; ?>" class="btn btn-primary text-light">Agregar &#128393; </a>
 								</td>
+
 								<td>
 									<a href="M_plantilla.php?Codigo_Plantilla=<?php echo $dato->Codigo_Plantilla; ?>" class="btn btn-primary text-light">Editar &#128393; </a>
 								</td>
@@ -60,7 +59,7 @@ $control= new PlantillaController();
 				</div>
 			 </div>
 			<?php include ("../util/footer.php"); ?>
-				
+
 			
 		</main>
 
