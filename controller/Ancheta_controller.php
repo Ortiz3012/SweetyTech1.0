@@ -7,8 +7,8 @@ class AnchetaController extends Conexion {
 
     public function Insertar(AnchetaModel $Ancheta){
 
-        $Consulta="INSERT INTO tbl_Ancheta(Nombre_Ancheta, Descripcion, Precio, Foto, 
-        Tipo_Base) VALUES (?,?,?,?,?)";
+        $Consulta="INSERT INTO tbl_Ancheta(Nombre_Ancheta, Descripcion, Precio, Foto1, Foto2, Foto3, 
+        Tipo_Base) VALUES (?,?,?,?,?,?,?)";
 
         try {
             $this->conexion->prepare($Consulta)->execute(array(
@@ -17,6 +17,8 @@ class AnchetaController extends Conexion {
                 $Ancheta->__GET('Descripcion'),
                 $Ancheta->__GET('Precio'),
                 $Ancheta->__GET('Foto'),
+                $Ancheta->__GET('Foto2'),
+                $Ancheta->__GET('Foto3'),
                 $Ancheta->__GET('Tipo_Base')
 
             ));
@@ -31,7 +33,7 @@ class AnchetaController extends Conexion {
     public function Listar(){
 
         $Ancheta=array();
-        $Consulta="SELECT tbl_ancheta.Codigo_Ancheta, tbl_ancheta.Nombre_Ancheta, tbl_ancheta.Descripcion, tbl_ancheta.Precio, tbl_ancheta.Foto, tbl_tipo_base.Nombre FROM tbl_ancheta JOIN tbl_tipo_base ON tbl_ancheta.Tipo_Base=tbl_tipo_base.Id_Tipo_Base";
+        $Consulta="SELECT tbl_ancheta.Codigo_Ancheta, tbl_ancheta.Nombre_Ancheta, tbl_ancheta.Descripcion, tbl_ancheta.Precio, tbl_ancheta.Foto1,tbl_ancheta.Foto2,tbl_ancheta.Foto3, tbl_tipo_base.Nombre FROM tbl_ancheta JOIN tbl_tipo_base ON tbl_ancheta.Tipo_Base=tbl_tipo_base.Id_Tipo_Base";
 
         try {
         $Datos=$this->conexion->prepare($Consulta);
@@ -43,7 +45,9 @@ class AnchetaController extends Conexion {
             $DatosAncheta->__SET('Nombre', $valores->Nombre_Ancheta);
             $DatosAncheta->__SET('Descripcion', $valores->Descripcion);
             $DatosAncheta->__SET('Precio', $valores->Precio);
-            $DatosAncheta->__SET('Foto', $valores->Foto);
+            $DatosAncheta->__SET('Foto', $valores->Foto1);
+            $DatosAncheta->__SET('Foto2', $valores->Foto2);
+            $DatosAncheta->__SET('Foto3', $valores->Foto3);
             $DatosAncheta->__SET('TipoBase', $valores->Nombre);
             $Ancheta[]=$DatosAncheta;
         } 
@@ -54,6 +58,7 @@ class AnchetaController extends Conexion {
             echo ("Ha Ocurrido Un Error al Listar los Datos, Intentalo nuevamente".$error->getMessage());
         }
     }
+    
 
 }
 

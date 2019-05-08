@@ -2,6 +2,7 @@
 require_once "../../model/configuracion.php";
 include_once "../../model/Plantilla_model.php";
 include_once "../../model/TipoPlan_model.php";
+include_once "../../model/DetallePlantillaInsumo.php";
 
 class PlantillaController extends Conexion {
 
@@ -26,10 +27,8 @@ class PlantillaController extends Conexion {
 
             $Datos=array();
             $listar="SELECT P.Codigo_Plantilla, P.Nombre_Plantilla, P.Fecha_Registro, 
-            Plan.Nombre_Tipo, I.Nombre_Insumo, C.Nombre_Categoria FROM tbl_plantilla P JOIN tbl_tipo_plantilla 
-            Plan JOIN tbl_insumo I JOIN tbl_insumo_has_plantilla D JOIN tbl_categoria C where 
-            P.Id_Tipo_Plantilla=Plan.Id_Tipo_Plantilla and i.Codigo_insumo=D.Codigo_insumo and 
-            C.Id_Categoria=I.id_Categoria";
+            Plan.Nombre_Tipo FROM tbl_plantilla P
+             JOIN tbl_tipo_plantilla Plan where P.Id_Tipo_Plantilla=Plan.Id_Tipo_Plantilla";
               try {
                $resultado=$this->conexion->prepare($listar);
                $resultado->execute();
@@ -41,8 +40,6 @@ class PlantillaController extends Conexion {
                $Lista->__SET('Nombre_plantilla', $dato->Nombre_Plantilla);
                $Lista->__SET('Fecha_Registro', $dato->Fecha_Registro); //modelo, segundo a la base de datos
                $Lista->__SET('Id_Tipo_Plantilla', $dato->Nombre_Tipo);
-               $Lista->__SET('Codigo_Insumo', $dato->Nombre_Insumo);
-               $Lista->__SET('id_Categoria', $dato->Nombre_Categoria);
         
                $Datos[]=$Lista;
        
@@ -99,7 +96,57 @@ class PlantillaController extends Conexion {
                 echo "Error al eliminar los Datos".$e->getmessage();
             }
         }
-    
-}
 
-?>
+        public function InsertarDetalle(DetalleModel $detalle){
+            $consulta="INSERT INTO tbl_insumo_has_plantilla(Codigo_Insumo, Cantidad) values (?,?)";
+            try {
+                $this->conexion->prepare($consulta)->execute(array(
+                   
+                    //$detalle->__GET('idDetalle'),
+                    $detalle->__GET('idInsumo'),
+                    //$detalle->__GET('idPlantilla'),
+                    $detalle->__GET('Cantidad')
+     
+                   ));
+                
+               return true;
+            } catch (Exception $error) {
+                echo ("Error al Ingresar los Datos".$error->getMessage());
+            }
+        }
+     
+          public function ConsultarDetalle($id){
+              //echo $id;
+            $dato=array();
+              $listar="SELECT tbl_insumo_has_plantilla.id_Detalle_InsumoPlan, 
+              tbl_insumo_has_plantilla.Codigo_Insumo, tbl_insumo_has_plantilla.Codigo_Plantilla,
+               tbl_insumo.Nombre_Insumo, tbl_insumo_has_plantilla.Cantidad 
+              FROM tbl_insumo JOIN tbl_insumo_has_plantilla JOIN tbl_plantilla ON 
+              tbl_insumo.Codigo_insumo= tbl_insumo_has_plantilla.Codigo_insumo  and
+               tbl_insumo_has_plantilla.Codigo_Plantilla=tbl_plantilla.Codigo_Plantilla
+              WHERE tbl_insumo_has_plantilla.Codigo_Plantilla=$id";
+                try {
+                 $resultado=$this->conexion->prepare($listar);
+                 $resultado->execute();
+                foreach ($resultado->fetchAll(PDO::FETCH_OBJ) as $datos) {
+     
+                 $Lista= new DetalleModel();
+     
+               $Lista->__SET('idDetalle', $datos->id_Detalle_InsumoPlan);
+               $Lista->__SET('idInsumo', $datos->Codigo_Insumo);
+               $Lista->__SET('idPlantilla', $datos->Codigo_Plantilla);
+               $Lista->__SET('Cantidad', $datos->Cantidad);
+        
+               $dato[]=$Lista;
+       
+           } return $dato;
+       
+           } catch (Exception $e) {
+       
+           echo "Error al Consultar".$e->getMessage();
+           }
+        }
+ 
+    }
+
+ 
