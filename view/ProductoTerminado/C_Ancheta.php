@@ -32,7 +32,9 @@ $Control= new AnchetaController();
 									<th>Nombre Ancheta</th>
 									<th>Descripcion</th>
                                     <th>Precio</th>
-                                    <th>Foto</th>
+                                    <th>Foto 1</th>
+									<th>Foto 2</th>
+									<th>Foto 3</th>
                                     <th>Tipo de Base</th>
 									<th>Insumos</th>
 								</tr>
@@ -45,6 +47,8 @@ $Control= new AnchetaController();
                                 <td><?php echo $valor->__GET('Descripcion'); ?> </td>
                                 <td><?php echo $valor->__GET('Precio'); ?> </td>
                                 <td><img src=" <?php $i = "Imagenes/"; echo $i.$valor->__GET('Foto'); ?>" style="width:100px; height:100px;"/></td>
+								<td><img src=" <?php $i = "Imagenes/"; echo $i.$valor->__GET('Foto2'); ?>" style="width:100px; height:100px;"/></td>
+								<td><img src=" <?php $i = "Imagenes/"; echo $i.$valor->__GET('Foto3'); ?>" style="width:100px; height:100px;"/></td>
                                 <td><?php echo $valor->__GET('TipoBase'); ?> </td>
                                 <td></td>
 
