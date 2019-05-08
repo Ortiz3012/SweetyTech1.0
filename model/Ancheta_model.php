@@ -7,6 +7,8 @@ class AnchetaModel {
     private $Descripcion;
     private $Precio;
     private $Foto;
+    private $Foto2; 
+    private $Foto3;
     private $TipoBase;
 
 

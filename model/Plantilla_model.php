@@ -5,8 +5,6 @@
     private $Nombre_plantilla;
     private $Fecha_Registro;
     private $Id_Tipo_Plantilla;
-    private $Codigo_Insumo;
-    private $id_Categoria;
     private $Nombre;
 
     public function __GET($att){
